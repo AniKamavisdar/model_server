@@ -2,7 +2,6 @@ import threading
 import datetime
 import time
 import flask
-
 # Import Configs
 from configs.app_configs import app_config
 from configs.job_config import job_config, JobConfig
