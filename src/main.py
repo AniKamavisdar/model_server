@@ -5,10 +5,12 @@ import flask
 # Import Configs
 from configs.app_configs import app_config
 from configs.job_config import job_config, JobConfig
-
+from configs import logger
 # Imports from custom lib
 import web_servers.server as main_server
 from data.health import health_status
+
+log = logger.logger.get_logger()
 
 # Defining Flask App and config at global level
 flask_app = flask.Flask(app_config.app_name)
@@ -19,13 +21,13 @@ flask_app.config['JSON_SORT_KEYS'] = False
 
 def run(from_date, to_date):
     while True:
-        print(f"Batch range {from_date} - {to_date}")
+        log.info(f"Batch range {from_date} - {to_date}")
         change_verification()
-        print("Verification Completed")
+        log.info("Verification Completed")
         health_status.update_status(status='Complete', details=f'Task Completed at {datetime.date.today()}')
         time.sleep(30)
         break
-    print("Stopping Threaded function")
+    log.info("Stopping Threaded function")
     return None
 
 
